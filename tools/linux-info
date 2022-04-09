@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+
+sub run_and_format {
+    my $result = `@_ 2>&1`;
+    print <<EOT;
+## ```@_```
+
+```
+$result
+```
+
+EOT
+}
+
+print <<EOT;
+# Runner Information (Linux)
+
+EOT
+
+my @commands = (
+    'whoami',
+    'pwd',
+    'uname -a',
+    'lsb_release -a',
+    'sysctl -a',
+    'cat /boot/config-$(uname -r)',
+    'df -h .',
+);
+
+for my $command(@commands) {
+    run_and_format($command);
+}
