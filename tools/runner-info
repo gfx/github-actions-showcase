@@ -2,9 +2,15 @@
 use strict;
 use warnings;
 
+my ($os) = @ARGV;
+
 
 sub run_and_format {
     my $result = `@_ 2>&1`;
+    if ($? != 0) {
+        die "Command failed: @_\n$result";
+    }
+    chomp $result;
     print <<EOT;
 ## ```@_```
 
@@ -23,12 +29,17 @@ EOT
 my @commands = (
     'whoami',
     'pwd',
-    'uname -a',
-    'lsb_release -a',
-    'sysctl -a',
-    'cat /boot/config-$(uname -r)',
     'df -h .',
+    'uname -a',
+    'sysctl -a',
 );
+
+if ($os eq "Linux") {
+    push @commands, (
+        'cat /boot/config-$(uname -r)',
+        'lsb_release -a',
+    );
+}
 
 for my $command(@commands) {
     run_and_format($command);
