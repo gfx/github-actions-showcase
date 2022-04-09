@@ -6,10 +6,9 @@ on:
   - cron: '49 4 * * *'
 
 jobs:
-  ubuntu:
+  build:
     runs-on:
       - ubuntu-latest
-      - macos-latest
 
     steps:
     - name: Checkout the repository
