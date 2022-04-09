@@ -6,8 +6,10 @@ on:
   - cron: '49 4 * * *'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  ubuntu:
+    runs-on:
+      - ubuntu-latest
+      - macos-latest
 
     steps:
     - name: Checkout the repository
@@ -29,7 +31,7 @@ jobs:
     - name: Generate the Wiki Page
       run: |
         set -xeu -o pipefail
-        ./tools/linux-info | tee .wiki/Linux-Runner.md
+        ./tools/runner-info "${{ runner.os }}" | tee .wiki/Runner-${{ runner.os }}.md
     - name: Update the wiki page
       working-directory: .wiki
       run: |
