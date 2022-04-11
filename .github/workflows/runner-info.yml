@@ -11,7 +11,7 @@ jobs:
       - ubuntu-latest
 
     concurrency:
-      group: ${{ github.action }}
+      group: ${{ github.workflow }}
       cancel-in-progress: true
 
     steps:
