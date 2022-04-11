@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+"use strict";
+
+// 好きな言語でビルドやテストを行う
+const [_node, _prog, actor] = process.argv;
+
+console.log(`Hello, ${actor}!`);
