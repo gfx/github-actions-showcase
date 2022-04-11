@@ -14,10 +14,28 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run a one-line script
+      - name: Run a shell script
         run: echo Hello, world!
 
-      - name: Run a multi-line script
+      - name: Run a Node script
+        shell: 'node {0}'
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          console.log("Hello, world!")
+
+      - name: Run a Python script
+        shell: 'python {0}'
+        run: |
+          print("Hello, world!")
+
+      - name: Run a Ruby script
+        shell: 'ruby {0}'
+        run: |
+          puts "Hello, world!"
+
+      - name: Run a Perl script
+        shell: 'perl {0}'
+        run: |
+          use strict;
+          use warnings;
+          use feature qw(say);
+          say "Hello, world!"
