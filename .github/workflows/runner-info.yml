@@ -7,11 +7,16 @@ on:
 
 jobs:
   build:
-    runs-on:
-      - ubuntu-latest
+    strategy:
+      matrix:
+        runner:
+          - ubuntu-latest
+          - macos-latest
 
+    name: 'build-on-${{ matrix.runner }}'
+    runs-on: '${{ matrix.runner }}'
     concurrency:
-      group: ${{ github.workflow }}
+      group: '${{ github.workflow }}-${{ matrix.runner }}'
       cancel-in-progress: true
 
     steps:

@@ -1,4 +1,4 @@
-name: CI
+name: Hello
 
 on:
   push:
@@ -9,7 +9,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        runner:
+          - ubuntu-latest
+          - macos-latest
+
+    name: 'build-on-${{ matrix.runner }}'
+    runs-on: '${{ matrix.runner }}'
+    concurrency:
+      group: '${{ github.workflow }}-${{ matrix.runner }}'
+      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v3
