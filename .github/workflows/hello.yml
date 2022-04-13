@@ -11,11 +11,13 @@ jobs:
   build:
     strategy:
       matrix:
-        runner:
-          - ubuntu-latest
-          - macos-latest
+        include:
+        - name: ubuntu
+          runner: ubuntu-latest
+        - name: macos
+          runner: macos-latest
 
-    name: 'build-on-${{ matrix.runner }}'
+    name: '${{ matrix.name }}'
     runs-on: '${{ matrix.runner }}'
     concurrency:
       group: '${{ github.workflow }}-${{ matrix.runner }}'
