@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: |
           gh auth status
-          curl -sSf -H "authorization: token $GH_TOKEN" https://api.github.com/user
+          curl -sS -H "authorization: token $GH_TOKEN" https://api.github.com/user
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
