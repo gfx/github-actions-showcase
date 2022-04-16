@@ -1,0 +1,26 @@
+name: Matrix+Include
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: []
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - name: ubuntu
+          runner: ubuntu-latest
+        - name: macos
+          runner: macos-latest
+
+    name: '${{ matrix.name }}'
+    runs-on: '${{ matrix.runner }}'
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./tools/build-foo-bar ${{ github.actor }}

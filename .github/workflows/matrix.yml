@@ -1,0 +1,26 @@
+name: Matrix
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: []
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, macos-latest]
+        nodejs: [12, 14, 16]
+
+    name: '${{ matrix.runner }} x nodejs/${{ matrix.nodejs }}'
+    runs-on: '${{ matrix.runner }}'
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '${{ matrix.nodejs }}'
+      - run: node --version
