@@ -17,6 +17,7 @@ jobs:
 
     name: '${{ matrix.runner }} x nodejs/${{ matrix.nodejs }}'
     runs-on: '${{ matrix.runner }}'
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v3
