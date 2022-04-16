@@ -17,6 +17,7 @@ jobs:
 
     name: '${{ matrix.name }}'
     runs-on: '${{ matrix.runner }}'
+    timeout-minutes: 5
     concurrency:
       group: '${{ github.workflow }}-${{ matrix.runner }}'
       cancel-in-progress: true
