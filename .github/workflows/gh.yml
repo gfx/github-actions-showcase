@@ -1,0 +1,22 @@
+name: GH
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          gh auth status
+          curl -sSf --head -H "authorization: token $GH_TOKEN" https://api.github.com | grep -i x-oauth-scopes:
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
