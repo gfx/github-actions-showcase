@@ -1,0 +1,31 @@
+name: "OIDC - GCP"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  GCP_PROJECT_ID: 'test-gcp-github-federation'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        workload_identity_provider: 'projects/372019545604/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+        service_account: 'my-service-account@test-gcp-github-federation.iam.gserviceaccount.com'
+
+    - name: 'Get IAM policy'
+      run: gcloud projects get-iam-policy "${GCP_PROJECT_ID}"
