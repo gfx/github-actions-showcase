@@ -1,0 +1,33 @@
+name: Summaries
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+        - name: ubuntu
+          runner: ubuntu-latest
+        - name: macos
+          runner: macos-latest
+
+    name: '${{ matrix.name }}'
+    runs-on: '${{ matrix.runner }}'
+    timeout-minutes: 5
+    concurrency:
+      group: '${{ github.workflow }}-${{ matrix.runner }}'
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run a shell script
+        run: |
+          echo >> "# Hello, world!" >> $GITHUB_STEP_SUMMARY
+          echo >> "This is the result of a job running on ${{ matrix.runner }}." >> $GITHUB_STEP_SUMMARY
+
