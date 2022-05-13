@@ -31,5 +31,5 @@ jobs:
           npm ci
       - name: Run a shell script
         run: |
-          tools/summaries.ts
+          npx ts-node tools/summaries.ts
 
