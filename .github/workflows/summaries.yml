@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
         - name: ubuntu
@@ -28,6 +29,7 @@ jobs:
 
       - name: Run a shell script
         run: |
-          echo >> "# Hello, world!" >> $GITHUB_STEP_SUMMARY
+          echo >> "## Hello, world! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo >> "" > $GITHUB_STEP_SUMMARY
           echo >> "This is the result of a job running on ${{ matrix.runner }}." >> $GITHUB_STEP_SUMMARY
 
