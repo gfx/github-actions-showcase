@@ -1,0 +1,35 @@
+name: Summaries
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - name: ubuntu
+          runner: ubuntu-latest
+        - name: macos
+          runner: macos-latest
+
+    name: '${{ matrix.name }}'
+    runs-on: '${{ matrix.runner }}'
+    timeout-minutes: 5
+    concurrency:
+      group: '${{ github.workflow }}-${{ matrix.runner }}'
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup script environments
+        run: |
+          npm ci
+      - name: Run a shell script
+        run: |
+          npx ts-node tools/summaries.ts
+
