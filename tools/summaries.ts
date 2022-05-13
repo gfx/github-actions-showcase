@@ -1,4 +1,4 @@
-#!/usr/bin/env npx ts-node --compilerOptions {"moduleResolution":"node"}
+#!/usr/bin/env npx ts-node
 import { summary } from "@actions/core";
 
 summary
